@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GHaSI6elVgE=",
+  "dgSpecHash": "cwJORr8DALk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\ApiGateway\\ApiGateway.csproj",
+  "projectFilePath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\SalesService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\julio\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.6\\microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",
     "C:\\Users\\julio\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"

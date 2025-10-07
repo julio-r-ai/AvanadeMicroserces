@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\ApiGateway\\ApiGateway.csproj": {}
+    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\SalesService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\ApiGateway\\ApiGateway.csproj": {
+    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\SalesService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\ApiGateway\\ApiGateway.csproj",
-        "projectName": "ApiGateway",
-        "projectPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\ApiGateway\\ApiGateway.csproj",
+        "projectUniqueName": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\SalesService.csproj",
+        "projectName": "SalesService",
+        "projectPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\SalesService.csproj",
         "packagesPath": "C:\\Users\\julio\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\ApiGateway\\obj\\",
+        "outputPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
