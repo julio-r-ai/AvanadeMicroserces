@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StockService.Data;
-using StockService.Models;
+using EntitiesProduct = StockService.Data.Entities.Product; // alias para a entidade
+using ModelsProduct = StockService.Models.Product;          // alias para o DTO
 
 [ApiController]
 [Route("api/[controller]")]
@@ -14,16 +15,41 @@ public class ProductsController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> Create(Product input)
+    public async Task<IActionResult> Create(ModelsProduct input) // usa o DTO
     {
-        _db.Products.Add(input);
+        // converte DTO em entidade
+        var entity = new EntitiesProduct
+        {
+            Id = Guid.NewGuid(),
+            Name = input.Name,
+            Price = input.Price,
+            Quantity = input.Quantity
+        };
+
+        _db.Products.Add(entity);
         await _db.SaveChangesAsync();
+
+        // retorna o DTO com Id gerado
+        input.Id = entity.Id;
         return CreatedAtAction(nameof(GetById), new { id = input.Id }, input);
     }
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> GetAll() => Ok(await _db.Products.ToListAsync());
+    public async Task<IActionResult> GetAll()
+    {
+        // converte entidades para DTOs
+        var products = await _db.Products
+            .Select(p => new ModelsProduct
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                Quantity = p.Quantity
+            }).ToListAsync();
+
+        return Ok(products);
+    }
 
     [HttpGet("{id}")]
     [AllowAnonymous]
@@ -31,18 +57,28 @@ public class ProductsController : ControllerBase
     {
         var p = await _db.Products.FindAsync(id);
         if (p == null) return NotFound();
-        return Ok(p);
+
+        var dto = new ModelsProduct
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Price = p.Price,
+            Quantity = p.Quantity
+        };
+
+        return Ok(dto);
     }
 
-    // Endpoint para ajuste manual de estoque
     [HttpPut("{id}/quantity")]
     [Authorize]
     public async Task<IActionResult> UpdateQuantity(Guid id, [FromBody] int quantity)
     {
-        var p = await _db.Products.FindAsync(id);
-        if (p == null) return NotFound();
-        p.Quantity = quantity;
+        var product = await _db.Products.FindAsync(id);
+        if (product == null) return NotFound();
+
+        product.Quantity = quantity;
         await _db.SaveChangesAsync();
+
         return NoContent();
     }
 }

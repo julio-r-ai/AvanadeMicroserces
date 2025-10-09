@@ -1,47 +1,37 @@
+﻿using System.Threading.Tasks;
 using MassTransit;
-using Microsoft.EntityFrameworkCore;
-using StockService.Data;
-using System.Threading.Tasks;
-using StockService.Messaging.Events;
-using Shared.Messaging.Events;
+using StockService.Data.Entities;
+using StockService.Repositories;
+using Shared.Events; // Certifique-se de que o namespace do OrderCreatedEvent está correto
 
-namespace StockService.Messaging.Consumers;
-
-public class OrderCreatedConsumer : IConsumer<OrderCreatedEvent>
+namespace StockService.Messaging.Consumers
 {
-    private readonly StockDbContext _db;
-    private readonly IPublishEndpoint _publish;
-
-    public OrderCreatedConsumer(StockDbContext db, IPublishEndpoint publish)
+    public class OrderCreatedConsumer : IConsumer<OrderCreatedEvent>
     {
-        _db = db;
-        _publish = publish;
-    }
+        private readonly IProductRepository _productRepository;
 
-    public async Task Consume(ConsumeContext<OrderCreatedEvent> context)
-    {
-        var evt = context.Message;
-
-        // Verificar estoque para todos os itens
-        foreach (var item in evt.Items)
+        public OrderCreatedConsumer(IProductRepository productRepository)
         {
-            var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == item.ProductId);
-            if (product == null || product.Quantity < item.Quantity)
+            _productRepository = productRepository;
+        }
+
+        public async Task Consume(ConsumeContext<OrderCreatedEvent> context)
+        {
+            var orderEvent = context.Message;
+
+            foreach (var orderItem in orderEvent.Items) // loop sobre os itens do pedido
             {
-                await _publish.Publish(new OrderRejectedEvent(evt.OrderId, $"Produto {item.ProductId} sem estoque."));
-                return;
+                // Busca o produto pelo Id
+                var product = await _productRepository.GetByIdAsync(orderItem.ProductId);
+                if (product != null)
+                {
+                    // Atualiza a quantidade em estoque
+                    product.Quantity -= orderItem.Quantity;
+
+                    // Salva a alteração
+                    await _productRepository.UpdateAsync(product);
+                }
             }
         }
-
-        // Reduzir estoque
-        foreach (var item in evt.Items)
-        {
-            var product = await _db.Products.FirstAsync(p => p.Id == item.ProductId);
-            product.Quantity -= item.Quantity;
-        }
-
-        await _db.SaveChangesAsync();
-
-        await _publish.Publish(new OrderConfirmedEvent(evt.OrderId));
     }
 }

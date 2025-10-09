@@ -164,3 +164,14 @@ C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockSer
 C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\obj\Debug\net9.0\StockService.pdb
 C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\obj\Debug\net9.0\StockService.genruntimeconfig.cache
 C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\obj\Debug\net9.0\ref\StockService.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\MassTransit.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\MassTransit.Abstractions.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\MassTransit.AspNetCoreIntegration.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\MassTransit.ExtensionsDependencyInjectionIntegration.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\MassTransit.RabbitMqTransport.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\Shared.dll
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\StockService\bin\Debug\net9.0\Shared.pdb

@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using StockService.Models;
+using StockService.Data.Entities;
 
-namespace StockService.Data;
-
-public class StockDbContext : DbContext
+namespace StockService.Data
 {
-    public StockDbContext(DbContextOptions<StockDbContext> options) : base(options) { }
-    public DbSet<Product> Products => Set<Product>();
+    public class StockDbContext : DbContext
+    {
+        public StockDbContext(DbContextOptions<StockDbContext> options)
+            : base(options) { }
+
+        public DbSet<Product> Products { get; set; }
+    }
 }

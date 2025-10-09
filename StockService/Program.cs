@@ -1,65 +1,23 @@
 using Microsoft.EntityFrameworkCore;
-using MassTransit;
 using StockService.Data;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using StockService.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<StockDbContext>(opt =>
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Configura DbContext
+builder.Services.AddDbContext<StockDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddMassTransit(x =>
-{
-    x.AddConsumer<OrderCreatedConsumer>();
-    x.UsingRabbitMq((context, cfg) =>
-    {
-        cfg.Host(builder.Configuration["RabbitMq:Host"] ?? "rabbitmq", "/", h =>
-        {
-            h.Username("guest");
-            h.Password("guest");
-        });
 
-        cfg.ReceiveEndpoint("order-created-queue", e =>
-        {
-            e.ConfigureConsumer<OrderCreatedConsumer>(context);
-        });
-    });
-});
-
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "MinhaChaveSuperSecreta123!";
-var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "ecommerce";
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-  .AddJwtBearer(options =>
-  {
-      options.RequireHttpsMetadata = false;
-      options.TokenValidationParameters = new TokenValidationParameters
-      {
-          ValidateIssuer = true,
-          ValidateAudience = true,
-          ValidIssuer = jwtIssuer,
-          ValidAudience = jwtIssuer,
-          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-      };
-  });
-
-builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<StockDbContext>();
-    db.Database.Migrate();
-}
-
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
 app.Run();
