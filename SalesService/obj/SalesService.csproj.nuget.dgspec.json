@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\SalesService.csproj": {}
+    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\SalesService.csproj": {
+    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\SalesService.csproj",
+        "projectUniqueName": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService.csproj",
         "projectName": "SalesService",
-        "projectPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\SalesService.csproj",
+        "projectPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService.csproj",
         "packagesPath": "C:\\Users\\julio\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService\\obj\\",
+        "outputPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,9 +50,31 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[7.1.2, )"
             }
           },
           "imports": [

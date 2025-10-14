@@ -1,0 +1,9 @@
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\SalesService\obj\Debug\net9.0\SalesService.csproj.AssemblyReference.cache
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\SalesService\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\SalesService\obj\Debug\net9.0\SalesService.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\SalesService\obj\Debug\net9.0\SalesService.AssemblyInfoInputs.cache
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\SalesService\obj\Debug\net9.0\SalesService.AssemblyInfo.cs
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\SalesService\obj\Debug\net9.0\SalesService.csproj.CoreCompileInputs.cache
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\SalesService\obj\Debug\net9.0\SalesService.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\SalesService\obj\Debug\net9.0\SalesService.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\julio\OneDrive\Documentos\BOOTCAMP-DIO-2026\AvanadeMicroserces\SalesService\obj\Debug\net9.0\SalesService.sourcelink.json
