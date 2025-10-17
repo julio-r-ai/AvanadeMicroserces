@@ -1,18 +1,15 @@
-namespace SalesService.Models;
-
-public class Order
+namespace SalesService.Models
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public string CustomerName { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public string Status { get; set; } = "Pending";
-    public List<OrderItem> Items { get; set; } = new();
-}
+    public class Order
+    {
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
+        public string CustomerName { get; set; } = string.Empty;
+        public string CustomerEmail { get; set; } = string.Empty;
 
-public class OrderItem
-{
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public Guid ProductId { get; set; }
-    public int Quantity { get; set; }
-    public decimal UnitPrice { get; set; }
+        public string Status { get; set; } = "Pending"; // ✅ novo
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow; // ✅ novo
+        // Relacionamento com os itens
+        public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
+    }
 }

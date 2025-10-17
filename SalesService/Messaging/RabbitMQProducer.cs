@@ -6,37 +6,31 @@ namespace SalesService.Messaging
 {
     public class RabbitMQProducer
     {
-        private readonly string _hostname;
-        private readonly int _port;
+        private readonly ConnectionFactory _factory;
 
-        public RabbitMQProducer(IConfiguration configuration)
+        public RabbitMQProducer()
         {
-            _hostname = configuration["RabbitMQ:Host"] ?? "rabbitmq";
-            _port = int.Parse(configuration["RabbitMQ:Port"] ?? "5672");
-        }
-
-        public void SendMessage(object message)
-        {
-            var factory = new ConnectionFactory()
-            {
-                HostName = _hostname,
-                Port = _port
-            };
-
+            var factory = new ConnectionFactory() { HostName = "localhost" };
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
+        }
 
-            channel.QueueDeclare(queue: "sales_queue",
+        public void SendMessage<T>(T message, string queueName)
+        {
+            // 🔧 Compatível com RabbitMQ.Client 7.1.2
+            using var connection = _factory.CreateConnection(_factory.ClientProvidedName ?? "SalesServiceConnection");
+            using var channel = connection.CreateModel();
+
+            channel.QueueDeclare(queue: queueName,
                                  durable: false,
                                  exclusive: false,
                                  autoDelete: false,
                                  arguments: null);
 
-            var json = JsonSerializer.Serialize(message);
-            var body = Encoding.UTF8.GetBytes(json);
+            var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
 
             channel.BasicPublish(exchange: "",
-                                 routingKey: "sales_queue",
+                                 routingKey: queueName,
                                  basicProperties: null,
                                  body: body);
         }

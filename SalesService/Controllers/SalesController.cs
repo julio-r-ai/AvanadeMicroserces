@@ -37,4 +37,4 @@ namespace SalesService.Controllers
             return Ok(sales);
         }
     }
-}gt 
+}

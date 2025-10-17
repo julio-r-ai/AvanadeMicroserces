@@ -26,7 +26,7 @@ namespace SalesService.Services
             {
                 SaleId = sale.Id,
                 Items = sale.Items.Select(i => new { i.ProductId, i.Quantity })
-            });
+            }, "sales_created_queue");
 
             return sale;
         }

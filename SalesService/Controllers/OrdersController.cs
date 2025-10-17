@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SalesService.Data;
 using SalesService.Models;
+using SalesService.Messaging;
+using SalesService.DTOs;
+
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -40,12 +44,13 @@ public class OrdersController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetAll() => Ok(await _db.Orders.Include(o => o.Items).ToListAsync());
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     [Authorize]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetById(int id)
     {
         var o = await _db.Orders.Include(x => x.Items).FirstOrDefaultAsync(x => x.Id == id);
         if (o == null) return NotFound();
         return Ok(o);
     }
+
 }
