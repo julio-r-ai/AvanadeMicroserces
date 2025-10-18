@@ -1,6 +1,7 @@
 using SalesService.Data;
 using SalesService.Models;
 using SalesService.Messaging;
+using System.Text.Json; // 👈 Adicionado para serializar em JSON
 
 namespace SalesService.Services
 {
@@ -21,12 +22,15 @@ namespace SalesService.Services
             _context.Sales.Add(sale);
             await _context.SaveChangesAsync();
 
-            // Notifica o RabbitMQ
-            _producer.SendMessage(new
+            // Serializa a mensagem
+            var message = JsonSerializer.Serialize(new
             {
                 SaleId = sale.Id,
                 Items = sale.Items.Select(i => new { i.ProductId, i.Quantity })
-            }, "sales_created_queue");
+            });
+
+            // Envia para o RabbitMQ (agora na ordem correta)
+            _producer.SendMessage("sales_created_queue", message);
 
             return sale;
         }
