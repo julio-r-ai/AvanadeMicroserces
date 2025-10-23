@@ -13,7 +13,7 @@ builder.Services.AddScoped<RabbitMQProducer>();
 builder.Services.AddScoped<SalesManager>();
 
 // Banco de Dados
-builder.Services.AddDbContext<SalesContext>(options =>
+builder.Services.AddDbContext<SalesDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // JWT
