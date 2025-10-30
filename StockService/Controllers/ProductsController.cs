@@ -1,84 +1,53 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StockService.Data;
-using EntitiesProduct = StockService.Data.Entities.Product; // alias para a entidade
-using ModelsProduct = StockService.Models.Product;          // alias para o DTO
+using StockService.Data.Entities;
 
-[ApiController]
-[Route("api/[controller]")]
-public class ProductsController : ControllerBase
+namespace StockService.Controllers
 {
-    private readonly StockDbContext _db;
-
-    public ProductsController(StockDbContext db) => _db = db;
-
-    [HttpPost]
-    [Authorize]
-    public async Task<IActionResult> Create(ModelsProduct input) // usa o DTO
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProductsController : ControllerBase
     {
-        // converte DTO em entidade
-        var entity = new EntitiesProduct
+        private readonly StockDbContext _context;
+
+        public ProductsController(StockDbContext context)
         {
-            Id = Guid.NewGuid(),
-            Name = input.Name,
-            Price = input.Price,
-            Quantity = input.Quantity
-        };
+            _context = context;
+        }
 
-        _db.Products.Add(entity);
-        await _db.SaveChangesAsync();
-
-        // retorna o DTO com Id gerado
-        input.Id = entity.Id;
-        return CreatedAtAction(nameof(GetById), new { id = input.Id }, input);
-    }
-
-    [HttpGet]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetAll()
-    {
-        // converte entidades para DTOs
-        var products = await _db.Products
-            .Select(p => new ModelsProduct
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Price = p.Price,
-                Quantity = p.Quantity
-            }).ToListAsync();
-
-        return Ok(products);
-    }
-
-    [HttpGet("{id}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetById(Guid id)
-    {
-        var p = await _db.Products.FindAsync(id);
-        if (p == null) return NotFound();
-
-        var dto = new ModelsProduct
+        [HttpGet]
+        public async Task<IEnumerable<Product>> Get()
         {
-            Id = p.Id,
-            Name = p.Name,
-            Price = p.Price,
-            Quantity = p.Quantity
-        };
+            return await _context.Products.ToListAsync();
+        }
 
-        return Ok(dto);
-    }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetById(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null) return NotFound();
+            return product;
+        }
 
-    [HttpPut("{id}/quantity")]
-    [Authorize]
-    public async Task<IActionResult> UpdateQuantity(Guid id, [FromBody] int quantity)
-    {
-        var product = await _db.Products.FindAsync(id);
-        if (product == null) return NotFound();
+        [HttpPost]
+        public async Task<ActionResult<Product>> Post(Product product)
+        {
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
+        }
 
-        product.Quantity = quantity;
-        await _db.SaveChangesAsync();
+        [HttpPut("{id}/reduce")]
+        public async Task<IActionResult> ReduceStock(int id, [FromQuery] int quantity)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null) return NotFound();
+            if (product.Quantity < quantity) return BadRequest("Quantidade insuficiente em estoque");
 
-        return NoContent();
+            product.Quantity -= quantity;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }

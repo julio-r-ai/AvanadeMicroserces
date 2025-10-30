@@ -3,35 +3,21 @@ using MassTransit;
 using StockService.Data.Entities;
 using StockService.Repositories;
 using Shared.Events; // Certifique-se de que o namespace do OrderCreatedEvent está correto
+using Shared.Messages; // 👈 importante!
 
 namespace StockService.Messaging.Consumers
 {
-    public class OrderCreatedConsumer : IConsumer<OrderCreatedEvent>
+    public class OrderCreatedConsumer : IConsumer<OrderCreated>
     {
-        private readonly IProductRepository _productRepository;
-
-        public OrderCreatedConsumer(IProductRepository productRepository)
+        public async Task Consume(ConsumeContext<OrderCreated> context)
         {
-            _productRepository = productRepository;
-        }
+            var order = context.Message;
 
-        public async Task Consume(ConsumeContext<OrderCreatedEvent> context)
-        {
-            var orderEvent = context.Message;
+            Console.WriteLine($"Pedido recebido: {order.Id}");
 
-            foreach (var orderItem in orderEvent.Items) // loop sobre os itens do pedido
-            {
-                // Busca o produto pelo Id
-                var product = await _productRepository.GetByIdAsync(orderItem.ProductId);
-                if (product != null)
-                {
-                    // Atualiza a quantidade em estoque
-                    product.Quantity -= orderItem.Quantity;
+            // lógica de estoque aqui
 
-                    // Salva a alteração
-                    await _productRepository.UpdateAsync(product);
-                }
-            }
+            await Task.CompletedTask;
         }
     }
 }

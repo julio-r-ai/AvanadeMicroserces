@@ -1,23 +1,11 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace StockService.Data.Entities
 {
-    [Table("Products")]
     public class Product
     {
-        [Key]
-        public Guid Id { get; set; }
-
-        [Required]
-        [MaxLength(100)]
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-
-        [Required]
+        public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
-
-        [Required]
         public int Quantity { get; set; }
     }
 }

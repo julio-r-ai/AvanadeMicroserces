@@ -13,7 +13,7 @@ namespace StockService.Repositories
             _context = context;
         }
 
-        public async Task<Product?> GetByIdAsync(Guid id)
+        public async Task<Product?> GetByIdAsync(int id)
         {
             return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
