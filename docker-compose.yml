@@ -1,38 +1,6 @@
+version: '3.8'
+
 services:
-  salesservice:
-    build:
-      context: ./SalesService
-      dockerfile: Dockerfile
-    ports:
-      - "5002:8080"
-    depends_on:
-      - sqlserver-sales
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver-sales,1433;Database=SalesDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
-
-  stockservice:
-    build:
-      context: ./StockService
-      dockerfile: Dockerfile
-    ports:
-      - "5001:8080"
-    depends_on:
-      - sqlserver-stock
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver-stock,1433;Database=StockDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
-
-  apigateway:
-    build:
-      context: ./ApiGateway
-      dockerfile: Dockerfile
-    ports:
-      - "5000:8080"
-    depends_on:
-      - salesservice
-      - stockservice
-
   sqlserver-sales:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver-sales
@@ -61,6 +29,54 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  salesservice:
+    build:
+      context: ./SalesService
+      dockerfile: Dockerfile
+    ports:
+      - "5002:8080"
+    depends_on:
+      - sqlserver-sales
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver-sales,1433;Database=SalesDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+    command: >
+      /bin/sh -c "
+      dotnet tool restore &&
+      dotnet ef database update &&
+      dotnet run --urls=http://+:8080
+      "
+
+  stockservice:
+    build:
+      context: ./StockService
+      dockerfile: Dockerfile
+    ports:
+      - "5001:8080"
+    depends_on:
+      - sqlserver-stock
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver-stock,1433;Database=StockDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+    command: >
+      /bin/sh -c "
+      dotnet tool restore &&
+      dotnet ef database update &&
+      dotnet run --urls=http://+:8080
+      "
+
+  apigateway:
+    build:
+      context: ./ApiGateway
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    depends_on:
+      - salesservice
+      - stockservice
 
 volumes:
   sqlserver_sales_data:

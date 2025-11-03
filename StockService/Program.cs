@@ -6,7 +6,9 @@ using StockService.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<StockDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+    sqlServerOptions => sqlServerOptions.EnableRetryOnFailure())
+);
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddSingleton<RabbitMqListener>();
