@@ -1,12 +1,10 @@
-version: '3.8'
-
 services:
   sqlserver-sales:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver-sales
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong!Passw0rd
+      - SA_PASSWORD=Julio@21#
     ports:
       - "1435:1433"
     volumes:
@@ -17,7 +15,7 @@ services:
     container_name: sqlserver-stock
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong!Passw0rd
+      - SA_PASSWORD=Julio@21#
     ports:
       - "1434:1433"
     volumes:
@@ -34,6 +32,7 @@ services:
     build:
       context: ./SalesService
       dockerfile: Dockerfile
+    container_name: salesservice
     ports:
       - "5002:8080"
     depends_on:
@@ -41,7 +40,7 @@ services:
       - rabbitmq
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver-sales,1433;Database=SalesDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=sqlserver-sales,1433;Database=SalesDb;User Id=sa;Password=Julio@21#;TrustServerCertificate=True;
     command: >
       /bin/sh -c "
       dotnet tool restore &&
@@ -51,8 +50,8 @@ services:
 
   stockservice:
     build:
-      context: ./StockService
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: StockService/Dockerfile
     ports:
       - "5001:8080"
     depends_on:
@@ -72,6 +71,7 @@ services:
     build:
       context: ./ApiGateway
       dockerfile: Dockerfile
+    container_name: apigateway
     ports:
       - "5000:8080"
     depends_on:
