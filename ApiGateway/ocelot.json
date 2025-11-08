@@ -1,19 +1,31 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/products/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "avanademicroserces-stockservice-1", "Port": 8080 }],
-      "UpstreamPathTemplate": "/estoque/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put" ]
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "avanademicroserces-stockservice-1",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/stock/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
     },
     {
-      "DownstreamPathTemplate": "/api/orders/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "avanademicroserces-salesservice-1", "Port": 8080 }],
-      "UpstreamPathTemplate": "/vendas/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "salesservice",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/sales/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
     }
   ],
-  "GlobalConfiguration": {}
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000"
+  }
 }
