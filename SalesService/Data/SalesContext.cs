@@ -5,9 +5,22 @@ namespace SalesService.Data
 {
     public class SalesContext : DbContext
     {
-        public SalesContext(DbContextOptions<SalesContext> options) : base(options) { }
+        public SalesContext(DbContextOptions<SalesContext> options) : base(options)
+        {
+        }
 
-        public DbSet<Sale> Sales { get; set; }
-        public DbSet<SaleItem> SaleItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Relacionamento: um Order tem muitos OrderItems
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.Items)
+                .WithOne(i => i.Order)
+                .HasForeignKey(i => i.OrderId);
+        }
     }
 }

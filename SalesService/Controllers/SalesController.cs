@@ -9,32 +9,27 @@ namespace SalesService.Controllers
     [Route("api/[controller]")]
     public class SalesController : ControllerBase
     {
-        private readonly SalesManager _salesManager;
+        private readonly SalesManager _manager;
 
-        public SalesController(SalesManager salesManager)
+        public SalesController(SalesManager manager)
         {
-            _salesManager = salesManager;
+            _manager = manager;
         }
 
-        // POST: api/sales
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateSale([FromBody] Sale sale)
+        public async Task<IActionResult> CreateOrder([FromBody] Order order)
         {
-            if (sale == null || !sale.Items.Any())
-                return BadRequest("Venda inválida.");
-
-            var result = await _salesManager.CreateSaleAsync(sale);
-            return Ok(result);
+            var newOrder = await _manager.CreateOrderAsync(order);
+            return CreatedAtAction(nameof(GetOrders), new { id = newOrder.Id }, newOrder);
         }
 
-        // GET: api/sales
         [HttpGet]
         [Authorize]
-        public IActionResult GetSales()
+        public async Task<IActionResult> GetOrders()
         {
-            var sales = _salesManager.GetSales();
-            return Ok(sales);
+            var orders = await _manager.GetAllOrdersAsync();
+            return Ok(orders);
         }
     }
 }

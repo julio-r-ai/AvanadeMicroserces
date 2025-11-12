@@ -1,43 +1,49 @@
 using SalesService.Data;
 using SalesService.Models;
-using SalesService.Messaging;
-using System.Text.Json; // 👈 Adicionado para serializar em JSON
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesService.Services
 {
     public class SalesManager
     {
         private readonly SalesContext _context;
-        private readonly RabbitMQProducer _producer;
 
-        public SalesManager(SalesContext context, RabbitMQProducer producer)
+        public SalesManager(SalesContext context)
         {
             _context = context;
-            _producer = producer;
         }
 
-        public async Task<Sale> CreateSaleAsync(Sale sale)
+        public async Task<List<Order>> GetAllOrdersAsync()
         {
-            // Simulação: em um cenário real, chamaríamos o StockService para validar estoque.
-            _context.Sales.Add(sale);
+            return await _context.Orders
+                .Include(o => o.Items)
+                .ToListAsync();
+        }
+
+        public async Task<Order?> GetOrderByIdAsync(int id)
+        {
+            return await _context.Orders
+                .Include(o => o.Items)
+                .FirstOrDefaultAsync(o => o.Id == id);
+        }
+
+        public async Task<Order> CreateOrderAsync(Order order)
+        {
+            order.CreatedAt = DateTime.UtcNow;
+            order.CreatedAt = DateTime.UtcNow;
+            _context.Orders.Add(order);
             await _context.SaveChangesAsync();
-
-            // Serializa a mensagem
-            var message = JsonSerializer.Serialize(new
-            {
-                SaleId = sale.Id,
-                Items = sale.Items.Select(i => new { i.ProductId, i.Quantity })
-            });
-
-            // Envia para o RabbitMQ (agora na ordem correta)
-            _producer.SendMessage("sales_created_queue", message);
-
-            return sale;
+            return order;
         }
 
-        public IEnumerable<Sale> GetSales()
+        public async Task<bool> UpdateOrderStatusAsync(int id, string status)
         {
-            return _context.Sales.ToList();
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null) return false;
+
+            order.Status = status;
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -9,18 +9,19 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Serviços customizados
 builder.Services.AddScoped<RabbitMQProducer>();
 builder.Services.AddScoped<SalesManager>();
 
-// Banco de Dados
+// ✅ Banco de Dados — nome do contexto corrigido
 builder.Services.AddDbContext<SalesContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// JWT
+// ✅ Autenticação JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
+        var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"] ?? "supersecretkey");
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -33,7 +34,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Controller + Swagger
+// ✅ Controllers + Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -41,14 +42,15 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sales Service API", Version = "v1" });
 });
 
+// Build
 var app = builder.Build();
 
-// ✅ Sempre habilita o Swagger, inclusive no container
+// ✅ Swagger sempre ativo
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sales Service API v1");
-    c.RoutePrefix = string.Empty; // Abre direto em http://localhost:5002/
+    c.RoutePrefix = string.Empty;
 });
 
 app.UseAuthentication();

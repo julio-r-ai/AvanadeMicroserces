@@ -8,10 +8,8 @@ namespace SalesService.Data
         public SalesContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<SalesContext>();
-
-            // Connection string do seu appsettings.json
             optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\MSSQLLocalDB;Database=SalesDB;Trusted_Connection=True;MultipleActiveResultSets=true"
+                "Server=localhost,1434;Database=SalesDb;User Id=sa;Password=Julio@21#;TrustServerCertificate=True;"
             );
 
             return new SalesContext(optionsBuilder.Options);

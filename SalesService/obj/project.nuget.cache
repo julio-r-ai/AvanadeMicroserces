@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RsSdY8kgTVE=",
+  "dgSpecHash": "hv6fG2TTeT4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService.csproj",
+  "projectFilePath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\salesservice\\SalesService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\julio\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\julio\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

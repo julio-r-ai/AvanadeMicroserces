@@ -13,10 +13,10 @@ using SalesService.DTOs;
 [Route("api/[controller]")]
 public class OrdersController : ControllerBase
 {
-    private readonly SalesDbContext _db;
+    private readonly SalesContext _db;
     private readonly IPublishEndpoint _publish;
 
-    public OrdersController(SalesDbContext db, IPublishEndpoint publish)
+    public OrdersController(SalesContext db, IPublishEndpoint publish)
     {
         _db = db;
         _publish = publish;

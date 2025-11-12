@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService.csproj": {}
+    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\salesservice\\SalesService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService.csproj": {
+    "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\salesservice\\SalesService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService.csproj",
+        "projectUniqueName": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\salesservice\\SalesService.csproj",
         "projectName": "SalesService",
-        "projectPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\SalesService.csproj",
+        "projectPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\salesservice\\SalesService.csproj",
         "packagesPath": "C:\\Users\\julio\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\SalesService\\obj\\",
+        "outputPath": "C:\\Users\\julio\\OneDrive\\Documentos\\BOOTCAMP-DIO-2026\\AvanadeMicroserces\\salesservice\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
