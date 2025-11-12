@@ -5,12 +5,12 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "avanademicroserces-stockservice-1",
+          "Host": "stockservice",
           "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/stock/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -22,7 +22,7 @@
         }
       ],
       "UpstreamPathTemplate": "/sales/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     }
   ],
   "GlobalConfiguration": {

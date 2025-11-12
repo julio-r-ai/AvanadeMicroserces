@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   sqlserver-sales:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -43,6 +45,8 @@ services:
       - ConnectionStrings__DefaultConnection=Server=sqlserver-sales,1433;Database=SalesDb;User Id=sa;Password=Julio@21#;TrustServerCertificate=True;
     command: >
       /bin/sh -c "
+      echo '⏳ Aguardando SQL Server iniciar...' &&
+      sleep 40 &&
       dotnet tool restore &&
       dotnet ef database update &&
       dotnet run --urls=http://+:8080
@@ -52,6 +56,7 @@ services:
     build:
       context: .
       dockerfile: StockService/Dockerfile
+    container_name: stockservice
     ports:
       - "5001:8080"
     depends_on:
@@ -59,9 +64,11 @@ services:
       - rabbitmq
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver-stock,1433;Database=StockDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=sqlserver-stock,1433;Database=StockDb;User Id=sa;Password=Julio@21#;TrustServerCertificate=True;
     command: >
       /bin/sh -c "
+      echo '⏳ Aguardando SQL Server iniciar...' &&
+      sleep 40 &&
       dotnet tool restore &&
       dotnet ef database update &&
       dotnet run --urls=http://+:8080
